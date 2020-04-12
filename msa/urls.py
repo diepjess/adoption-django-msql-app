@@ -15,4 +15,7 @@ urlpatterns = [
 
     # ex /msa/1/vote/
     path('<int:question_id>/vote/', views.vote, name='vote'),
+
+    # ex /msa/search/
+    path('search/', views.search, name='search'),
 ]

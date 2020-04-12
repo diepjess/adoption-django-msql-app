@@ -46,9 +46,15 @@ class Shelter(models.Model):
 class Species(models.Model):
     species_name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.species_name
+
 class Breed(models.Model):
     species = models.ForeignKey(Species, on_delete=models.CASCADE)
     breed_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.breed_name
 
 
 class PetInfo(models.Model):
@@ -62,10 +68,13 @@ class PetInfo(models.Model):
 
     adoption_status = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 class AdoptedPet(models.Model):
-    pet_info = models.ForeignKey(PetInfo, on_delete=models.DO_NOTHING)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+    pet_info = models.ForeignKey(PetInfo, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     date_adopted = models.DateField()
 
