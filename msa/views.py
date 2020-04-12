@@ -80,3 +80,15 @@ def search(request):
         }
         return HttpResponse(template.render(context, request))
 
+
+def petInfoDetail(request, petinfo_id):
+    # if you can't get the object, return a 404
+    with connection.cursor() as cursor:
+        cursor.callproc('GetAllPetInfosDetailReadable', [petinfo_id])
+        queryset = namedtuplefetchall(cursor)
+
+        template = loader.get_template('msa/search.html')
+        context = {
+            'queryset': queryset,
+        }
+        return HttpResponse(template.render(context, request))

@@ -1,7 +1,14 @@
 {% if queryset %}
-    <ul>
+    <ul style="list-style-type:none;">
     {% for item in queryset %}
-        <li>{{item.0}} {{item.1}} {{item.2}} {{item.3}} {{item.4}} {{item.5}} {{item.6}}</li>
+            <li>{{item.0}}</li>
+            <li>Name:       {{item.1}}</li>
+            <li>Age:        {{item.2}}</li>
+            <li>Adopted?:   {{item.3}}</li>
+            <li>Shelter:    {{item.4}}</li>
+            <li>Species:    {{item.5}}</li>
+            <li>Breed:      {{item.6}}</li>
+            <br>
         {% endfor %}
     </ul>
 {% else %}

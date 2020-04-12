@@ -18,4 +18,7 @@ urlpatterns = [
 
     # ex /msa/search/
     path('search/', views.search, name='search'),
+
+    #ex /msa/petinfo/1/
+    path('petinfo/<int:petinfo_id>', views.petInfoDetail, name='petinfodetail'),
 ]
