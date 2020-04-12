@@ -1,0 +1,19 @@
+<!--Show the question text as a header-->
+<h1>{{ question.question_text }}</h1>
+
+<!--if we have an error message, like a 404 show the message-->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<!--Create a form that posts to the vote url in the polls app-->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+
+    <!--For each choice in a question do the same thing-->
+{% for choice in question.choice_set.all %}
+    <!--Create a radio button that is ID by the forloop counter and has the value of the choice id-->
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <!--make the label for the radio button the choice text-->
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
