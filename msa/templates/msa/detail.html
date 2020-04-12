@@ -4,8 +4,8 @@
 <!--if we have an error message, like a 404 show the message-->
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<!--Create a form that posts to the vote url in the polls app-->
-<form action="{% url 'polls:vote' question.id %}" method="post">
+<!--Create a form that posts to the vote url in the msa app-->
+<form action="{% url 'msa:vote' question.id %}" method="post">
 {% csrf_token %}
 
     <!--For each choice in a question do the same thing-->
