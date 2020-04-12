@@ -79,3 +79,4 @@ def search(request):
             'queryset': queryset,
         }
         return HttpResponse(template.render(context, request))
+

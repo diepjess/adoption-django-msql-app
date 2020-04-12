@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `project`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: project
@@ -209,7 +207,7 @@ CREATE TABLE `django_admin_log` (
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +216,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2020-04-11 21:34:37.699097','1','What\'s up?',2,'[]',7,1),(2,'2020-04-12 04:05:19.912972','1','What\'s up?',1,'[{\"added\": {}}]',10,1),(3,'2020-04-12 04:05:41.651180','2','True or false?',1,'[{\"added\": {}}]',10,1),(4,'2020-04-12 04:10:02.902860','1','Not much',1,'[{\"added\": {}}]',9,1),(5,'2020-04-12 04:10:10.020219','2','The sky',1,'[{\"added\": {}}]',9,1),(6,'2020-04-12 04:10:37.441981','3','true',1,'[{\"added\": {}}]',9,1),(7,'2020-04-12 04:10:41.670814','4','false',1,'[{\"added\": {}}]',9,1),(8,'2020-04-12 19:23:12.510012','1','Boston',1,'[{\"added\": {}}]',12,1),(9,'2020-04-12 19:23:16.958734','2','Quincy',1,'[{\"added\": {}}]',12,1),(10,'2020-04-12 19:23:21.215418','3','Braintree',1,'[{\"added\": {}}]',12,1),(11,'2020-04-12 19:25:04.561626','1','Red Pokeball',1,'[{\"added\": {}}]',16,1),(12,'2020-04-12 19:25:14.175229','2','Blue Pokeball',1,'[{\"added\": {}}]',16,1),(13,'2020-04-12 19:25:26.569607','3','Green Pokeball',1,'[{\"added\": {}}]',16,1),(14,'2020-04-12 19:26:19.828977','1','Species object (1)',1,'[{\"added\": {}}]',15,1),(15,'2020-04-12 19:26:22.293147','2','Species object (2)',1,'[{\"added\": {}}]',15,1),(16,'2020-04-12 19:26:24.958979','3','Species object (3)',1,'[{\"added\": {}}]',15,1),(17,'2020-04-12 19:28:22.673049','1','Corgi',1,'[{\"added\": {}}]',11,1),(18,'2020-04-12 19:28:27.797122','2','Husky',1,'[{\"added\": {}}]',11,1),(19,'2020-04-12 19:28:47.738524','3','Siamese',1,'[{\"added\": {}}]',11,1),(20,'2020-04-12 19:29:05.300307','4','Sphynx',1,'[{\"added\": {}}]',11,1),(21,'2020-04-12 19:29:09.679413','5','Parrot',1,'[{\"added\": {}}]',11,1),(22,'2020-04-12 19:29:33.346737','6','Canary',1,'[{\"added\": {}}]',11,1),(23,'2020-04-12 19:29:44.553224','4','Rat',1,'[{\"added\": {}}]',15,1),(24,'2020-04-12 19:29:59.724856','4','Rat',3,'',15,1),(25,'2020-04-12 19:30:08.209251','5','Rabbit',1,'[{\"added\": {}}]',15,1),(26,'2020-04-12 19:30:50.290201','1','Mudkip',1,'[{\"added\": {}}]',13,1),(27,'2020-04-12 19:31:49.124503','2','Turtwig',1,'[{\"added\": {}}]',13,1),(28,'2020-04-12 19:32:04.204053','3','Torchic',1,'[{\"added\": {}}]',13,1);
+INSERT INTO `django_admin_log` VALUES (1,'2020-04-11 21:34:37.699097','1','What\'s up?',2,'[]',7,1),(2,'2020-04-12 04:05:19.912972','1','What\'s up?',1,'[{\"added\": {}}]',10,1),(3,'2020-04-12 04:05:41.651180','2','True or false?',1,'[{\"added\": {}}]',10,1),(4,'2020-04-12 04:10:02.902860','1','Not much',1,'[{\"added\": {}}]',9,1),(5,'2020-04-12 04:10:10.020219','2','The sky',1,'[{\"added\": {}}]',9,1),(6,'2020-04-12 04:10:37.441981','3','true',1,'[{\"added\": {}}]',9,1),(7,'2020-04-12 04:10:41.670814','4','false',1,'[{\"added\": {}}]',9,1),(8,'2020-04-12 19:23:12.510012','1','Boston',1,'[{\"added\": {}}]',12,1),(9,'2020-04-12 19:23:16.958734','2','Quincy',1,'[{\"added\": {}}]',12,1),(10,'2020-04-12 19:23:21.215418','3','Braintree',1,'[{\"added\": {}}]',12,1),(11,'2020-04-12 19:25:04.561626','1','Red Pokeball',1,'[{\"added\": {}}]',16,1),(12,'2020-04-12 19:25:14.175229','2','Blue Pokeball',1,'[{\"added\": {}}]',16,1),(13,'2020-04-12 19:25:26.569607','3','Green Pokeball',1,'[{\"added\": {}}]',16,1),(14,'2020-04-12 19:26:19.828977','1','Species object (1)',1,'[{\"added\": {}}]',15,1),(15,'2020-04-12 19:26:22.293147','2','Species object (2)',1,'[{\"added\": {}}]',15,1),(16,'2020-04-12 19:26:24.958979','3','Species object (3)',1,'[{\"added\": {}}]',15,1),(17,'2020-04-12 19:28:22.673049','1','Corgi',1,'[{\"added\": {}}]',11,1),(18,'2020-04-12 19:28:27.797122','2','Husky',1,'[{\"added\": {}}]',11,1),(19,'2020-04-12 19:28:47.738524','3','Siamese',1,'[{\"added\": {}}]',11,1),(20,'2020-04-12 19:29:05.300307','4','Sphynx',1,'[{\"added\": {}}]',11,1),(21,'2020-04-12 19:29:09.679413','5','Parrot',1,'[{\"added\": {}}]',11,1),(22,'2020-04-12 19:29:33.346737','6','Canary',1,'[{\"added\": {}}]',11,1),(23,'2020-04-12 19:29:44.553224','4','Rat',1,'[{\"added\": {}}]',15,1),(24,'2020-04-12 19:29:59.724856','4','Rat',3,'',15,1),(25,'2020-04-12 19:30:08.209251','5','Rabbit',1,'[{\"added\": {}}]',15,1),(26,'2020-04-12 19:30:50.290201','1','Mudkip',1,'[{\"added\": {}}]',13,1),(27,'2020-04-12 19:31:49.124503','2','Turtwig',1,'[{\"added\": {}}]',13,1),(28,'2020-04-12 19:32:04.204053','3','Torchic',1,'[{\"added\": {}}]',13,1),(29,'2020-04-12 21:13:11.933743','5','Bulbasaur',3,'',13,1),(30,'2020-04-12 21:13:36.293618','1','Quincy Shelter',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',16,1),(31,'2020-04-12 21:13:43.695205','2','Braintree Shelter',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',16,1),(32,'2020-04-12 21:13:49.746075','3','Boston Best Shelter',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',16,1),(33,'2020-04-12 21:14:04.508669','4','Boston Shelter 1',1,'[{\"added\": {}}]',16,1),(34,'2020-04-12 21:14:10.272927','3','Boston Shelter 2',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',16,1),(35,'2020-04-12 21:14:23.376988','5','Braintree Shelter 2',1,'[{\"added\": {}}]',16,1),(36,'2020-04-12 21:14:27.295972','2','Braintree Shelter 1',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',16,1),(37,'2020-04-12 21:14:31.963175','1','Quincy Shelter 1',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',16,1),(38,'2020-04-12 21:14:39.125345','6','Quincy Shelter 2',1,'[{\"added\": {}}]',16,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,7 +428,7 @@ CREATE TABLE `msa_petinfo` (
   CONSTRAINT `msa_petinfo_breed_id_7f30dcd8_fk_msa_breed_id` FOREIGN KEY (`breed_id`) REFERENCES `msa_breed` (`id`) ON DELETE SET NULL,
   CONSTRAINT `msa_petinfo_shelter_id_ca61af4d_fk_msa_shelter_id` FOREIGN KEY (`shelter_id`) REFERENCES `msa_shelter` (`id`) ON DELETE CASCADE,
   CONSTRAINT `msa_petinfo_species_id_3620aece_fk_msa_species_id` FOREIGN KEY (`species_id`) REFERENCES `msa_species` (`id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +453,7 @@ CREATE TABLE `msa_question` (
   `question_text` varchar(200) NOT NULL,
   `pub_date` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -464,7 +462,7 @@ CREATE TABLE `msa_question` (
 
 LOCK TABLES `msa_question` WRITE;
 /*!40000 ALTER TABLE `msa_question` DISABLE KEYS */;
-INSERT INTO `msa_question` VALUES (1,'What\'s up?','2020-04-12 04:05:16.000000'),(2,'True or false?','2020-04-12 04:05:39.000000'),(3,'Pokemon','2020-04-12 15:09:03.000000');
+INSERT INTO `msa_question` VALUES (1,'What\'s up?','2020-04-12 04:05:16.000000'),(2,'True or false?','2020-04-12 04:05:39.000000'),(3,'Pokemon','2020-04-12 15:09:03.000000'),(4,'Pokemon','2020-04-12 17:07:35.000000');
 /*!40000 ALTER TABLE `msa_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,7 +481,7 @@ CREATE TABLE `msa_shelter` (
   PRIMARY KEY (`id`),
   KEY `msa_shelter_city_id_d52a2825_fk_msa_city_id` (`city_id`),
   CONSTRAINT `msa_shelter_city_id_d52a2825_fk_msa_city_id` FOREIGN KEY (`city_id`) REFERENCES `msa_city` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -492,7 +490,7 @@ CREATE TABLE `msa_shelter` (
 
 LOCK TABLES `msa_shelter` WRITE;
 /*!40000 ALTER TABLE `msa_shelter` DISABLE KEYS */;
-INSERT INTO `msa_shelter` VALUES (1,'Red Pokeball','123567',2),(2,'Blue Pokeball','2987344',3),(3,'Green Pokeball','23423523',1);
+INSERT INTO `msa_shelter` VALUES (1,'Quincy Shelter 1','123567',2),(2,'Braintree Shelter 1','2987344',3),(3,'Boston Shelter 2','23423523',1),(4,'Boston Shelter 1','29357234',1),(5,'Braintree Shelter 2','234234',3),(6,'Quincy Shelter 2','23423',2);
 /*!40000 ALTER TABLE `msa_shelter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +533,33 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllPetInfos`()
 BEGIN
-	SELECT * FROM msa_petinfo WHERE adoption_status = 0;
+	SELECT * FROM msa_petinfo;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetAllPetInfosReadable` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllPetInfosReadable`()
+BEGIN
+	SELECT msa_petinfo.id, msa_petinfo.name, msa_petinfo.age, msa_petinfo.adoption_status, msa_shelter.name AS shelter, msa_species.species_name, msa_breed.breed_name
+		FROM msa_petinfo
+			JOIN msa_shelter
+				ON shelter_id = msa_shelter.id
+			JOIN msa_species
+				ON species_id = msa_species.id
+			LEFT OUTER JOIN msa_breed
+				ON breed_id = msa_breed.id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -552,4 +576,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-12 16:54:55
+-- Dump completed on 2020-04-12 17:37:36
