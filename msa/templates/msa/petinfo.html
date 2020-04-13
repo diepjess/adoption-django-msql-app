@@ -1,16 +1,33 @@
+<!--if we have an error message, like a 404 show the message-->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
 {% if queryset %}
     <ul style="list-style-type:none;">
     {% for item in queryset %}
             <li>{{item.0}}</li>
             <li>Name:       {{item.1}}</li>
             <li>Age:        {{item.2}}</li>
-            <li>Adopted?:   {{item.3}}</li>
+            {% if item.3 == 0 %}
+                <li>Adopted?:   Not adopted</li>
+            {% else %}
+                <li>Adopted?:   Adopted</li>
+            {% endif %}
             <li>Shelter:    {{item.4}}</li>
             <li>Species:    {{item.5}}</li>
             <li>Breed:      {{item.6}}</li>
+
+            {% if item.3 == 0 %}
+                <form action="{% url 'msa:adoptpet' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="pet_id" value={{ item.0 }}>
+                    <input type="hidden" name="user_id" value={{ user_id }}>
+                    <input type="submit" value="Adopt">
+                </form>
+            {% endif %}
             <br>
         {% endfor %}
     </ul>
+
 {% else %}
     <p>No pet info.</p>
 {% endif %}

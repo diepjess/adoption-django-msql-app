@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.db import connection
+from django.db import connection, IntegrityError
 from collections import namedtuple
 from django.http import JsonResponse
 
@@ -99,6 +99,7 @@ def petInfoDetail(request, petinfo_id):
         template = loader.get_template('msa/petinfo.html')
         context = {
             'queryset': queryset,
+            'user_id': request.user.id
         }
         return HttpResponse(template.render(context, request))
 
@@ -116,6 +117,21 @@ def userAdoptedPetResult(request):
         }
         return HttpResponse(template.render(context, request))
 
+
+# a view that is meant to adopt a pet
+def adoptPet(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.callproc('AdoptPet', [request.POST['pet_id'], request.POST['user_id']])
+            queryset = namedtuplefetchall(cursor)
+
+            template = loader.get_template('msa/userPetResults.html')
+            context = {
+                'queryset': queryset,
+            }
+        return HttpResponse('post')
+    except(IntegrityError):
+        return HttpResponse('Not allowed to adopt this pet.')
 
 
 
