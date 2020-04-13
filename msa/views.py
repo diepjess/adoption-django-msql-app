@@ -4,54 +4,17 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db import connection
 from collections import namedtuple
+from django.http import JsonResponse
 
-from .models import Question, Choice
-from .forms import PetInfoForm
-
-# show a view of the 5 most recently published questions
+# show the base view of the actions a user can do, hyperlinked
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
     template = loader.get_template('msa/index.html')
     context = {
-        'latest_question_list': latest_question_list,
+        'context': 'context',
     }
     return HttpResponse(template.render(context, request))
 
-# show a view on the Question details - right now it's just the question text
-def detail(request, question_id):
-    # if you can't get the object, return a 404
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'msa/detail.html', {'question': question})
-
-
-# show a view that has the Question voting results
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'msa/results.html', {'question': question})
-
-
-# post url for voting and redirecting to results or shows error message
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'msa/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        # choice successfully voted, increase vote and redirect to results
-        selected_choice.votes += 1
-        selected_choice.save()
-        # return an HttpResponseRedirect after successfully dealing
-        # with POST data to prevent resubmissions, reconstruct a url
-        # for results based on  question id
-        return HttpResponseRedirect(reverse('msa:results', args=(question.id,)))
-
-
+# FUNCTIONS TO MANIPULATE QUERYSET RETURNED FROM STORED PROCEDURE
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
@@ -67,29 +30,92 @@ def namedtuplefetchall(cursor):
     return [nt_result(*row) for row in cursor.fetchall()]
 
 
-# show a view that has all pet info
+# show a view that can help filter what pet info's we can see
 def search(request):
     with connection.cursor() as cursor:
         cursor.callproc('GetAllPetInfos')
         #cursor.execute("SELECT * FROM msa_petinfo")
         #queryset = cursor.fetchall()
         queryset = namedtuplefetchall(cursor)
+        cursor.close()
 
-        template = loader.get_template('msa/search.html')
-        context = {
-            'queryset': queryset,
-        }
-        return HttpResponse(template.render(context, request))
+    with connection.cursor() as cursor:
+        cursor.callproc('GetAllCity')
+        cityset = namedtuplefetchall(cursor)
+        cursor.close()
+
+    template = loader.get_template('msa/search.html')
+    context = {
+        'queryset': queryset,
+        'cityset': cityset
+    }
+    return HttpResponse(template.render(context, request))
 
 
+# a view that gets all the shelters given a city id
+def getSheltersFromCity(request):
+    city_id = request.GET['id']
+    if city_id == "null":
+        return []
+    with connection.cursor() as cursor:
+        cursor.callproc('GetShelterFromCity', [city_id])
+        queryset = namedtuplefetchall(cursor)
+        jsondata = []
+        for item in queryset:
+            jsondata.append({'id': item.id, 'name':item.name})
+        # print(jsondata)
+    data = {
+        'data': jsondata
+    }
+    return JsonResponse(data)
+
+
+# a view that gives all the species given a shelter id
+def getSpeciesFromShelter(request):
+    species_id = request.GET['id']
+    if species_id == "null":
+        return []
+    with connection.cursor() as cursor:
+        cursor.callproc('GetSpeciesFromShelter', [species_id])
+        queryset = namedtuplefetchall(cursor)
+        print(queryset)
+        jsondata = []
+        for item in queryset:
+            jsondata.append({'id': item.id, 'name':item.species_name})
+        print(jsondata)
+    data = {
+        'data': jsondata
+    }
+    return JsonResponse(data)
+
+
+# a view that displays all the useful info for a pet info given the pet info id
 def petInfoDetail(request, petinfo_id):
     # if you can't get the object, return a 404
     with connection.cursor() as cursor:
         cursor.callproc('GetAllPetInfosDetailReadable', [petinfo_id])
         queryset = namedtuplefetchall(cursor)
 
-        template = loader.get_template('msa/search.html')
+        template = loader.get_template('msa/petinfo.html')
         context = {
             'queryset': queryset,
         }
         return HttpResponse(template.render(context, request))
+
+
+# a view that displays all the pet infos of all the users adopted pets
+def userAdoptedPetResult(request):
+    # if you can't get the object, return a 404
+    with connection.cursor() as cursor:
+        cursor.callproc('GetUserAdoptedPetsReadable', [request.user.id])
+        queryset = namedtuplefetchall(cursor)
+
+        template = loader.get_template('msa/userPetResults.html')
+        context = {
+            'queryset': queryset,
+        }
+        return HttpResponse(template.render(context, request))
+
+
+
+

@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('msa/', include('msa.urls')),
     path('admin/', admin.site.urls),
+    path('', include('django.contrib.auth.urls')), # go to http://127.0.0.1:8000/login to login as a user
 ]

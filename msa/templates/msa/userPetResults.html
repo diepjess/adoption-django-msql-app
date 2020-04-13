@@ -1,0 +1,17 @@
+{% if queryset %}
+    <ul style="list-style-type:none;">
+    {% for item in queryset %}
+            <li>{{item.0}}</li>
+            <li>Name:       {{item.1}}</li>
+            <li>Age:        {{item.2}}</li>
+            <li>Adopted?:   {{item.3}}</li>
+            <li>Shelter:    {{item.4}}</li>
+            <li>Species:    {{item.5}}</li>
+            <li>Breed:      {{item.6}}</li>
+            <li>Adopted on: {{item.7}}</li>
+            <br>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No pet info.</p>
+{% endif %}

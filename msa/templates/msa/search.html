@@ -1,3 +1,103 @@
+<div> Adoption Search Page
+</div>
+
+
+<!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+
+ <script>
+            $(document).ready(function(){
+                 $('select#selectcity').change(function () {
+                     var optionSelected = $(this).find("option:selected");
+                     var city_id  = optionSelected.attr('val');
+                     var city_name   = optionSelected.text();
+                     if (city_name == '--'){
+                         $("#selectshelter option").remove();
+                         $("#selectshelter").append('<option val="null">--</option>')
+                         $("#selectspecies option").remove();
+                         $("#selectspecies").append('<option val="null">--</option>')
+
+                        return;
+                    }
+
+                     data = {'id' : city_id };
+                     $.ajax({
+                            url: '/msa/getSheltersFromCity',
+                            data: {
+                              'id': city_id
+                            },
+                            dataType: 'json',
+                            success: function (result) {
+                                cities_data = result.data
+                                $("#selectshelter option").remove();
+                                $("#selectshelter").append('<option val="null">--</option>')
+                                for (var i = 0; i < cities_data.length; i++) {
+                                    $("#selectshelter").append('<option val=' + cities_data[i].id +  '>'+ cities_data[i].name +'</option>');
+                                };
+                            }
+                          });
+                 });
+            });
+    </script>
+
+<script>
+            $(document).ready(function(){
+                 $('select#selectshelter').change(function () {
+                     var optionSelected = $(this).find("option:selected");
+                     var shelter_id = optionSelected.attr('val');
+                     var shelter_name   = optionSelected.text();
+                      if (shelter_name == '--'){
+                         $("#selectcity").selectedIndex=0;
+                         $("#selectspecies option").remove();
+                         $("#selectspecies").append('<option val="null">--</option>')
+                        return;
+                    }
+
+                     $.ajax({
+                            url: '/msa/getSpeciesFromShelter',
+                            data: {
+                              'id': shelter_id
+                            },
+                            dataType: 'json',
+                            success: function (result) {
+                                shelter_data = result.data
+                                $("#selectspecies option").remove();
+                                $("#selectspecies").append('<option val="null">--</option>')
+                                for (var i = 0; i < shelter_data.length; i++) {
+                                    $("#selectspecies").append('<option val=' + shelter_data[i].id +  '>'+ shelter_data[i].name +'</option>');
+                                };
+                            }
+                          });
+                 });
+            });
+        </script>
+
+<div>
+    What city would you like to see?
+    <div>
+        <select name="selectcity" id="selectcity">
+            <option val="null">--</option>
+        {% for item in cityset %}
+            <option val="{{ item.id }}"> {{ item.name }} </option>
+        {% endfor %}
+        </select>
+    </div>
+
+
+    Which shelter would from this would you like to see?
+    <div>
+        <select name="selectshelter" id="selectshelter">
+            <option val="null">--</option>
+        </select>
+    </div>
+
+    Which species of animal would you like to adopt?
+    <div>
+        <select name="selectspecies" id="selectspecies">
+            <option val="null">--</option>
+        </select>
+    </div>
+</div>
 {% if queryset %}
     <ul style="list-style-type:none;">
     {% for item in queryset %}
