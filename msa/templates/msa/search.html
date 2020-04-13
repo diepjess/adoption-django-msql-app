@@ -9,13 +9,13 @@
             $(document).ready(function(){
                  $('select#selectcity').change(function () {
                      var optionSelected = $(this).find("option:selected");
-                     var city_id  = optionSelected.attr('val');
+                     var city_id  = optionSelected.attr('value');
                      var city_name   = optionSelected.text();
                      if (city_name == '--'){
                          $("#selectshelter option").remove();
-                         $("#selectshelter").append('<option val="null">--</option>')
+                         $("#selectshelter").append('<option value="null">--</option>')
                          $("#selectspecies option").remove();
-                         $("#selectspecies").append('<option val="null">--</option>')
+                         $("#selectspecies").append('<option value="null">--</option>')
 
                         return;
                     }
@@ -30,9 +30,9 @@
                             success: function (result) {
                                 cities_data = result.data
                                 $("#selectshelter option").remove();
-                                $("#selectshelter").append('<option val="null">--</option>')
+                                $("#selectshelter").append('<option value="null">--</option>')
                                 for (var i = 0; i < cities_data.length; i++) {
-                                    $("#selectshelter").append('<option val=' + cities_data[i].id +  '>'+ cities_data[i].name +'</option>');
+                                    $("#selectshelter").append('<option value=' + cities_data[i].id +  '>'+ cities_data[i].name +'</option>');
                                 };
                             }
                           });
@@ -44,12 +44,12 @@
             $(document).ready(function(){
                  $('select#selectshelter').change(function () {
                      var optionSelected = $(this).find("option:selected");
-                     var shelter_id = optionSelected.attr('val');
+                     var shelter_id = optionSelected.attr('value');
                      var shelter_name   = optionSelected.text();
                       if (shelter_name == '--'){
                          $("#selectcity").selectedIndex=0;
                          $("#selectspecies option").remove();
-                         $("#selectspecies").append('<option val="null">--</option>')
+                         $("#selectspecies").append('<option value="null">--</option>')
                         return;
                     }
 
@@ -62,9 +62,9 @@
                             success: function (result) {
                                 shelter_data = result.data
                                 $("#selectspecies option").remove();
-                                $("#selectspecies").append('<option val="null">--</option>')
+                                $("#selectspecies").append('<option value="null">--</option>')
                                 for (var i = 0; i < shelter_data.length; i++) {
-                                    $("#selectspecies").append('<option val=' + shelter_data[i].id +  '>'+ shelter_data[i].name +'</option>');
+                                    $("#selectspecies").append('<option value=' + shelter_data[i].id +  '>'+ shelter_data[i].name +'</option>');
                                 };
                             }
                           });
@@ -72,13 +72,13 @@
             });
         </script>
 
-<div>
+<form action="/msa/getPetInfoSearchForm">
     What city would you like to see?
     <div>
-        <select name="selectcity" id="selectcity">
-            <option val="null">--</option>
+            <select name="selectcity" id="selectcity">
+            <option value="null">--</option>
         {% for item in cityset %}
-            <option val="{{ item.id }}"> {{ item.name }} </option>
+            <option value="{{ item.id }}"> {{ item.name }} </option>
         {% endfor %}
         </select>
     </div>
@@ -87,30 +87,17 @@
     Which shelter would from this would you like to see?
     <div>
         <select name="selectshelter" id="selectshelter">
-            <option val="null">--</option>
+            <option value="null">--</option>
         </select>
     </div>
 
     Which species of animal would you like to adopt?
     <div>
         <select name="selectspecies" id="selectspecies">
-            <option val="null">--</option>
+            <option value="null">--</option>
         </select>
     </div>
-</div>
-{% if queryset %}
-    <ul style="list-style-type:none;">
-    {% for item in queryset %}
-            <li>{{item.0}}</li>
-            <li>Name:       {{item.1}}</li>
-            <li>Age:        {{item.2}}</li>
-            <li>Adopted?:   {{item.3}}</li>
-            <li>Shelter:    {{item.4}}</li>
-            <li>Species:    {{item.5}}</li>
-            <li>Breed:      {{item.6}}</li>
-            <br>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No pet info.</p>
-{% endif %}
+    <div>
+      <input type="submit">
+    </div>
+</form>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search result Page</title>
+</head>
+<body>
+{% if queryset %}
+    <ul style="list-style-type:none;">
+    {% for item in queryset %}
+        <li><a href="/msa/petinfo/{{ item.0 }}">{{item.0}} - Click me for more Info</a></li>
+            <li>Name:       {{item.1}}</li>
+            <li>Age:        {{item.2}}</li>
+            {% if item.3 == 0 %}
+                <li>Adopted?:   Not adopted</li>
+            {% else %}
+                <li>Adopted?:   Adopted</li>
+            {% endif %}            <li>Shelter:    {{item.4}}</li>
+            <li>Species:    {{item.5}}</li>
+            <li>Breed:      {{item.6}}</li>
+            <br>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No pet info.</p>
+{% endif %}
+</body>
+</html>

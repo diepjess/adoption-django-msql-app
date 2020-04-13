@@ -134,4 +134,27 @@ def adoptPet(request):
         return HttpResponse('Not allowed to adopt this pet.')
 
 
+def getPetInfoSearchForm(request):
+    species_id = request.GET['selectshelter']
+    shelter_id = request.GET['selectspecies']
+    city_id = request.GET['selectcity']
+
+    if species_id == 'null':
+        species_id = None;
+    if shelter_id == 'null':
+        shelter_id = None;
+    if city_id == 'null':
+        city_id = None;
+    # print(request)
+    with connection.cursor() as cursor:
+        cursor.callproc('GetAllPetInfosFilterShelterOrSpecies', [species_id, shelter_id, city_id])
+        queryset = namedtuplefetchall(cursor)
+        cursor.close()
+    template = loader.get_template('msa/searchresults.html')
+    context = {
+        'queryset': queryset,
+    }
+    return HttpResponse(template.render(context, request))
+
+
 
