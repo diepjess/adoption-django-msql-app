@@ -26,5 +26,8 @@ urlpatterns = [
     path('userpets/', views.userAdoptedPetResult, name='userpets'),
 
     #ex /msa/adoptpet/
-    path('adoptpet/', views.adoptPet, name='adoptpet')
+    path('adoptpet/', views.adoptPet, name='adoptpet'),
+
+    #ex /msa/removeadoptpet/
+    path('removeadoptpet', views.removeAdoptedPet, name='removeAdoptPet')
 ]

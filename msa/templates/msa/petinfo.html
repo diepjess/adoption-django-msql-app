@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Info Details</title>
+    <ul style="list-style-type:none;">
+        <li><a href="{% url 'msa:search'%}">Search</a></li>
+        <li><a href="{% url 'msa:userpets'%}">Your Adopted Pets</a></li>
+    </ul>
+    <h1>Pet Info Details</h1>
+</head>
+<body>
 <!--if we have an error message, like a 404 show the message-->
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -23,6 +35,13 @@
                     <input type="hidden" name="user_id" value={{ user_id }}>
                     <input type="submit" value="Adopt">
                 </form>
+            {% else %}
+                <form action="{% url 'msa:removeAdoptPet' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="pet_id" value={{ item.0 }}>
+                    <input type="hidden" name="user_id" value={{ user_id }}>
+                    <input type="submit" value="Give up for adoption">
+                </form>
             {% endif %}
             <br>
         {% endfor %}
@@ -31,3 +50,5 @@
 {% else %}
     <p>No pet info.</p>
 {% endif %}
+</body>
+</html>

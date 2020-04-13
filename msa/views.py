@@ -88,6 +88,28 @@ def getSpeciesFromShelter(request):
     }
     return JsonResponse(data)
 
+def getPetInfoSearchForm(request):
+    species_id = request.GET['selectshelter']
+    shelter_id = request.GET['selectspecies']
+    city_id = request.GET['selectcity']
+
+    if species_id == 'null':
+        species_id = None;
+    if shelter_id == 'null':
+        shelter_id = None;
+    if city_id == 'null':
+        city_id = None;
+    # print(request)
+    with connection.cursor() as cursor:
+        cursor.callproc('GetAllPetInfosFilterShelterOrSpecies', [species_id, shelter_id, city_id])
+        queryset = namedtuplefetchall(cursor)
+        cursor.close()
+    template = loader.get_template('msa/searchresults.html')
+    context = {
+        'queryset': queryset,
+    }
+    return HttpResponse(template.render(context, request))
+
 
 # a view that displays all the useful info for a pet info given the pet info id
 def petInfoDetail(request, petinfo_id):
@@ -123,38 +145,20 @@ def adoptPet(request):
     try:
         with connection.cursor() as cursor:
             cursor.callproc('AdoptPet', [request.POST['pet_id'], request.POST['user_id']])
-            queryset = namedtuplefetchall(cursor)
-
-            template = loader.get_template('msa/userPetResults.html')
-            context = {
-                'queryset': queryset,
-            }
-        return HttpResponse('post')
+        return HttpResponseRedirect(reverse('msa:userpets'))
     except(IntegrityError):
         return HttpResponse('Not allowed to adopt this pet.')
 
 
-def getPetInfoSearchForm(request):
-    species_id = request.GET['selectshelter']
-    shelter_id = request.GET['selectspecies']
-    city_id = request.GET['selectcity']
+# a view that is meant to help remove an adopted pet
+def removeAdoptedPet(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.callproc('RemoveAdoptPet', [request.POST['pet_id'], request.POST['user_id']])
+            return HttpResponseRedirect(reverse('msa:userpets'))
+    except(IntegrityError):
+        return HttpResponse('Not allowed to give this pet up for adoption.')
 
-    if species_id == 'null':
-        species_id = None;
-    if shelter_id == 'null':
-        shelter_id = None;
-    if city_id == 'null':
-        city_id = None;
-    # print(request)
-    with connection.cursor() as cursor:
-        cursor.callproc('GetAllPetInfosFilterShelterOrSpecies', [species_id, shelter_id, city_id])
-        queryset = namedtuplefetchall(cursor)
-        cursor.close()
-    template = loader.get_template('msa/searchresults.html')
-    context = {
-        'queryset': queryset,
-    }
-    return HttpResponse(template.render(context, request))
 
 
 
