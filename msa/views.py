@@ -6,6 +6,7 @@ from django.db import connection
 from collections import namedtuple
 
 from .models import Question, Choice
+from .forms import PetInfoForm
 
 # show a view of the 5 most recently published questions
 def index(request):
